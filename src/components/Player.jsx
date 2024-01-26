@@ -3,26 +3,31 @@
 
 import { useState } from "react";
 
-export default function Player({ name, symbol }) {
+export default function Player({ startName, symbol }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [playerName, setPlayerName] = useState(startName);
 
   const handleEditClick = () => {
     setIsEditing((editing) => !editing);
   };
 
-  let playerName = <span className="player-name">{name}</span>;
-  // let buttonCaption = "Edit";
+  const handleChange = (e) => {
+    setPlayerName(e.target.value);
+  };
 
-  // value를 사용함으로써 입력 필드 속의 값을 설정, 하지만 value 만 설정해주면 name 의 기본값만 뜨고 수정X
+  let editPlayerName = <span className="player-name">{playerName}</span>;
+
+  // value를 사용함으로써 입력 필드 속의 값을 설정, 하지만 수정이 되질 않음 value 에 설정되어 있는 값이 덮어 씌우기 때문이다.
+  // defaultValue 값을 사용하면 이후 특정 값으로 덮어쓰지 못하게 한다.
+  // 하지만 value를 그대로 사용해본다. 바뀌는 값을 설정하고 Save를 누르면 그 값이 설정되게끔 설정해야 하는데 useState로 제어하려고 함.
   if (isEditing) {
-    playerName = <input type="text" required value={name} />;
-    // buttonCaption = "Save";
+    editPlayerName = <input type="text" required defaultValue={playerName} onChange={handleChange} />;
   }
 
   return (
     <li>
       <span className="player">
-        {playerName}
+        {editPlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>
       <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
