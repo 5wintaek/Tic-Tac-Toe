@@ -7,22 +7,25 @@ export default function Player({ name, symbol }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    setIsEditing((editing) => !editing);
   };
 
   let playerName = <span className="player-name">{name}</span>;
+  // let buttonCaption = "Edit";
 
+  // value를 사용함으로써 입력 필드 속의 값을 설정, 하지만 value 만 설정해주면 name 의 기본값만 뜨고 수정X
   if (isEditing) {
-    playerName = <input type="text" required />;
+    playerName = <input type="text" required value={name} />;
+    // buttonCaption = "Save";
   }
 
   return (
     <li>
       <span className="player">
         {playerName}
-        <span className="player-symol">{symbol}</span>
+        <span className="player-symbol">{symbol}</span>
       </span>
-      <button onClick={handleEditClick}>Edit</button>
+      <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
     </li>
   );
 }
