@@ -21,7 +21,7 @@ export default function Player({ startName, symbol, isActive }) {
   // defaultValue 값을 사용하면 이후 특정 값으로 덮어쓰지 못하게 한다.
   // 하지만 value를 그대로 사용해본다. 바뀌는 값을 설정하고 Save를 누르면 그 값이 설정되게끔 설정해야 하는데 useState로 제어하려고 함.
   if (isEditing) {
-    editPlayerName = <input type="text" required defaultValue={playerName} onChange={handleChange} />;
+    editPlayerName = <input type="text" required value={playerName} onChange={handleChange} />;
   }
 
   return (
