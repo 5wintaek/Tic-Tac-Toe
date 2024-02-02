@@ -9,9 +9,9 @@ module.exports = {
   htmlWhitespaceSensitivity: "css",
   bracketSameLine: false,
   // 객체 표기 괄호 사이 공백 추가 여부 (ex: { foo: bar })
-  bracketSpacing: true,
+  bracketSpacing: false,
   // 행폭 설정 (줄 길이가 설정 값보다 길어지면 자동 개행)
-  printWidth: 80,
+  printWidth: 200,
   // 산문 래핑 설정
   proseWrap: "preserve",
   // 객체 속성 key 값에 인용 부호 사용 여부 (ex: { 'key': 'xkieo-xxxx' })
