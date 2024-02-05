@@ -1,18 +1,17 @@
-import { defineConfig } from "vite";
-import { resolve } from "node:path";
-import react from "@vitejs/plugin-react";
-import macro from "vite-plugin-babel-macros";
+import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
+import {resolve} from 'node:path';
 
 export default defineConfig({
-  plugins: [macro(), react()],
+  plugins: [react()],
+  base: '',
   resolve: {
-    alias: [{ find: "@", replacement: resolve(__dirname, "./src") }],
+    extensions: ['.js', '.jsx'],
+    alias: [{find: '@', replacement: resolve(__dirname, './src')}],
   },
   server: {
-    host: "localhost",
+    host: 'localhost',
     port: 3000,
-  },
-  css: {
-    devSourcemap: true, // 개발자 도구에 소스맵 생성 설정
+    open: true,
   },
 });
