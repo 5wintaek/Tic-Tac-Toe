@@ -4,7 +4,16 @@ const initialGameBaord = [
   [null, null, null],
 ];
 
-export default function GameBoard({ onSelectSquare }) {
+// turns 는 배열
+export default function GameBoard({onSelectSquare, turns}) {
+  let gameBoard = initialGameBaord;
+
+  for (const turn of turns) {
+    const {square, player} = turn;
+    const {row, col} = square;
+
+    gameBoard[row][col] = player;
+  }
   // const [gameboard, setGameBoard] = useState(initialGameBaord);
 
   // const handleGameBoard = (rowIndex, colIndex) => {
@@ -18,12 +27,12 @@ export default function GameBoard({ onSelectSquare }) {
   // };
   return (
     <ol id="game-board">
-      {gameboard.map((row, rowIndex) => (
+      {gameBoard.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
-                <button onClick={onSelectSquare}>{playerSymbol}</button>
+                <button onClick={() => onSelectSquare(rowIndex, colIndex)}>{playerSymbol}</button>
               </li>
             ))}
           </ol>
