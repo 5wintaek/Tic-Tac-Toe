@@ -24,11 +24,16 @@ const deriveActivePlayer = (gameTurns) => {
 
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
+  const [players, setPlayers] = useState({
+    X: 'player1',
+    O: 'player2',
+  });
 
   // const [activePlayer, setActivePlayer] = useState('X');
   // activePlayer 는 gameTurns 안에 넣어서 변경 가능하기 떄문에 불필요한 State 상태 제거
   const activePlayer = deriveActivePlayer(gameTurns);
-  let gameBoard = initialGameBaord;
+  //
+  let gameBoard = [...initialGameBaord].map((array) => [...array]);
 
   for (const turn of gameTurns) {
     const {square, player} = turn;
@@ -46,7 +51,7 @@ function App() {
     const thirdSquareSymbol = gameBoard[combination[2].row][combination[2].column];
 
     if (firstSquareSymbol && firstSquareSymbol === secondSquareSymbol && firstSquareSymbol === thirdSquareSymbol) {
-      winner = firstSquareSymbol;
+      winner = players[firstSquareSymbol];
     }
   }
 
@@ -66,14 +71,27 @@ function App() {
     });
   };
 
+  const handleRematch = () => {
+    return setGameTurns([]);
+  };
+
+  const handleNameChange = (symbol, newName) => {
+    setPlayers((prevPlayers) => {
+      return {
+        ...prevPlayers,
+        [symbol]: newName,
+      };
+    });
+  };
+
   return (
     <main>
       <div id="game-container">
         <ol id="players" className="highlight-player">
-          <Player startName="Player1" symbol="X" isActive={activePlayer === 'X'} />
-          <Player startName="Player2" symbol="O" isActive={activePlayer === 'O'} />
+          <Player startName="Player1" symbol="X" isActive={activePlayer === 'X'} onChangeName={handleNameChange} />
+          <Player startName="Player2" symbol="O" isActive={activePlayer === 'O'} onChangeName={handleNameChange} />
         </ol>
-        {(winner || hasDraw) && <GameOver winner={winner} />}
+        {(winner || hasDraw) && <GameOver winner={winner} onRestart={handleRematch} />}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
       <Log turns={gameTurns} />

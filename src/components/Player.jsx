@@ -1,14 +1,18 @@
 // props 를 넣는 이유는 Player 1 과 X라는 것을 매번 하드코딩으로 바꾸는 것을 피하기 위해 사용
 // props 받은 것을 부모한테 넘겨줌
 
-import { useState } from "react";
+import {useState} from 'react';
 
-export default function Player({ startName, symbol, isActive }) {
+export default function Player({startName, symbol, isActive, onChangeName}) {
   const [isEditing, setIsEditing] = useState(false);
   const [playerName, setPlayerName] = useState(startName);
 
   const handleEditClick = () => {
     setIsEditing((editing) => !editing);
+
+    if (isEditing) {
+      onChangeName(symbol, playerName);
+    }
   };
 
   const handleChange = (e) => {
@@ -25,12 +29,12 @@ export default function Player({ startName, symbol, isActive }) {
   }
 
   return (
-    <li className={isActive ? "active" : undefined}>
+    <li className={isActive ? 'active' : undefined}>
       <span className="player">
         {editPlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>
-      <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
+      <button onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
     </li>
   );
 }
